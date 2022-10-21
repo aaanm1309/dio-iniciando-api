@@ -1,5 +1,7 @@
 package br.com.adrianomenezes.dioiniciandoapi.repository;
 
+import br.com.adrianomenezes.dioiniciandoapi.handler.BusinessException;
+import br.com.adrianomenezes.dioiniciandoapi.handler.CampoObrigatorioException;
 import br.com.adrianomenezes.dioiniciandoapi.model.Usuario;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +11,13 @@ import java.util.List;
 @Repository
 public class UsuarioRepository {
     public Usuario save(Usuario usuario) {
+        if (usuario.getLogin()==null){
+            throw new BusinessException("o campo login é obrigatório");
+        }
+        if (usuario.getPassword()==null){
+            throw new CampoObrigatorioException("password");
+        }
+
         if (usuario.getId() == null) {
             System.out.println("SAVE - Salvando usuario " + usuario.getLogin());
         } else {
